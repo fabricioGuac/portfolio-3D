@@ -22,7 +22,7 @@ N/A
 
 ## Credits
 
-N/A
+The sea effect in this portfolio was adapted from the [Three.js Sea Example](https://threejs.org/examples/webgl_shaders_ocean.html).
 
 
 ## License
