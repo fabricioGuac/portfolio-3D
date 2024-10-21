@@ -13,6 +13,9 @@ import { Water } from 'three/examples/jsm/objects/Water';
 //Imports the Sky object, used to create a customizable atmospheric skybox with effects like time of day and sun position
 import { Sky } from 'three/examples/jsm/objects/Sky';
 
+//Imports the boat class
+import Boat from '../components/Boat';
+
 
 export default function Navigation() {
     //Initializes a ref to store a reference to the container DOM element for the 3D scene
@@ -21,8 +24,8 @@ export default function Navigation() {
     //Sets up the 3D scene when the component is mounted
     useEffect(() => {
         //Initializes the key variables for the threejs scene
-        let camera, scene, renderer, water, controls, sun, mesh;
-        
+        let camera, scene, renderer, water, controls, sun, mesh, boat, ambientLight;
+
         //Stores the reference to the container DOM element where the 3D scene will be rendered
         const container = containerRef.current;
 
@@ -44,6 +47,12 @@ export default function Navigation() {
 
             //Creates a new Threejs scene
             scene = new THREE.Scene();
+
+            //Sets up a new ambient light to provide a soft even ilumination across the scene
+            ambientLight = new THREE.AmbientLight(0xffffff, 1.5); 
+            //Adds ambient light to the scene
+            scene.add(ambientLight);
+
 
             //Sets up the camera with a field of view of 55, aspect ration matching the window size and far clipping plane at 20000 units 
             camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 20000);
@@ -150,6 +159,9 @@ export default function Navigation() {
             //Updates the controls to apply the changes
             controls.update();
 
+            //Initializes the boat and adds it to the scene
+            boat = new Boat(scene);
+
             //Event listener to handle window resizing and adjust the camera and renderer sizes
             window.addEventListener('resize', onWindowResize);
         }
@@ -163,6 +175,52 @@ export default function Navigation() {
             //Resizes the renderer to match the new window dimensions
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
+
+        // Function to control the boat using switch
+        const handleKeyDown = (e) => {
+            // Ensures the boat is loaded
+            if (!boat) return;
+
+            switch (e.key) {
+                case "ArrowUp":
+                    boat.speed.vel = 1;
+                    console.log('up');
+                    break;
+                case "ArrowDown":
+                    boat.speed.vel = -1;
+                    break;
+                case "ArrowRight":
+                    boat.speed.rot = -0.02;
+                    break;
+                case "ArrowLeft":
+                    boat.speed.rot = 0.02;
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        // Handle key release to stop movement
+        const handleKeyUp = (e) => {
+            if (!boat) {
+                return;
+            }
+
+            switch (e.key) {
+                case "ArrowUp":
+                case "ArrowDown":
+                    //Stops moving
+                    boat.speed.vel = 0;
+                    break;
+                case "ArrowRight":
+                case "ArrowLeft":
+                    //Stops rotating
+                    boat.speed.rot = 0;
+                    break;
+                default:
+                    break;
+            }
+        };
 
         //Function to animate the scene
         function animate() {
@@ -179,6 +237,13 @@ export default function Navigation() {
             mesh.rotation.z = time * 0.51;
             //Updates the water's time uniform for water animation making the water appear to move
             water.material.uniforms['time'].value += 1.0 / 60.0;
+
+            //If the boat is loaded updates it's position and rotation and animates it
+            if (boat) {
+                boat.update();
+                boat.pitchRoll(time);
+            }
+
             //Renders the scne from the perspective of the camera
             renderer.render(scene, camera);
         }
@@ -188,10 +253,18 @@ export default function Navigation() {
         //Starts the animation loop
         animate();
 
+        //Adds keyboard event listeners
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
+
         // Cleanup function to remove the renderer and event listeners when the component unmounts
         return () => {
             //Removes the renderer DOM element from the container
             container.removeChild(renderer.domElement);
+            //Removes the keydown event listener
+            window.removeEventListener('keydown', handleKeyDown);
+            //Removes the keyup event listener
+            window.removeEventListener('keyup', handleKeyUp);
             //Removes the resize event listener
             window.removeEventListener('resize', onWindowResize);
         };

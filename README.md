@@ -24,6 +24,9 @@ N/A
 
 The sea effect in this portfolio was adapted from the [Three.js Sea Example](https://threejs.org/examples/webgl_shaders_ocean.html).
 
+This work's boat is based on **"Boat 4K V2"** by [gogiart](https://sketchfab.com/agt14032013), licensed under [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/). You can view the model [here](https://sketchfab.com/3d-models/boat-4k-v2-694a88d9ce644110875c9ba4e1c0ebf5).
+
+
 
 ## License
 
