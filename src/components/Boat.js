@@ -1,5 +1,7 @@
 //Imports the GLTFLoader from the Three.js examples to load 3D models
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+//Imports Threejs
+import * as THREE from 'three';
 
 //Creates a class for the boat
 export default class Boat {
@@ -64,5 +66,28 @@ export default class Boat {
             //Updates the boat's rotation around the x axis for pitching effect
             this.boat.rotation.x = pitchOffset;
         }
+    }
+
+    //Method to get the boat's position
+    getBoatPosition () {
+        if(this.boat){
+            //Returns the boat position
+            return this.boat.position;
+        }
+        //Returns null if the boat is not defined
+        return null;
+    }
+
+    //Method to get the boat's direction
+    getBoatDirection(){
+        if(this.boat){
+            //Creates a new THREE.Vector3 instance to store the direction
+            const direction = new THREE.Vector3();
+            //Populates the direction vector with the boat's current world direction 
+            this.boat.getWorldDirection(direction);
+            return direction
+        }
+        //Returns null if the boat is not defined
+        return null;
     }
 }

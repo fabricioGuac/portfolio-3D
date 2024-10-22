@@ -1,11 +1,8 @@
-//Imports useEffect and useRef from React, essential hooks for managing side effects and referencing DOM elements
+//Imports useEffect and useRef  from React, essential hooks for managing side effects and referencing DOM elements
 import { useEffect, useRef } from 'react';
 
 //Imports the core Three.js library for creating and displaying 3D graphics on the web
 import * as THREE from 'three';
-
-//Imports OrbitControls, a utility to allow for intuitive mouse-driven camera orbiting, panning, and zooming
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 //Imports the Water object, used to create a realistic water surface simulation with reflection and refraction
 import { Water } from 'three/examples/jsm/objects/Water';
@@ -21,14 +18,14 @@ export default function Navigation() {
     //Initializes a ref to store a reference to the container DOM element for the 3D scene
     const containerRef = useRef(null);
 
+
     //Sets up the 3D scene when the component is mounted
     useEffect(() => {
         //Initializes the key variables for the threejs scene
-        let camera, scene, renderer, water, controls, sun, mesh, boat, ambientLight;
+        let camera, scene, renderer, water, sun, boat, ambientLight;
 
         //Stores the reference to the container DOM element where the 3D scene will be rendered
         const container = containerRef.current;
-
 
         function init() {
             //Initializes the WebGL renderer which renders the 3D scene onto the screen
@@ -49,15 +46,13 @@ export default function Navigation() {
             scene = new THREE.Scene();
 
             //Sets up a new ambient light to provide a soft even ilumination across the scene
-            ambientLight = new THREE.AmbientLight(0xffffff, 1.5); 
+            ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
             //Adds ambient light to the scene
             scene.add(ambientLight);
 
 
             //Sets up the camera with a field of view of 55, aspect ration matching the window size and far clipping plane at 20000 units 
             camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 20000);
-            //Positions the camera
-            camera.position.set(30, 30, 100);
 
             //Initializes a vector for the position of the sun
             sun = new THREE.Vector3();
@@ -141,23 +136,6 @@ export default function Navigation() {
             //Calls the updateSun function to apply the sun's position when the scene is initialized
             updateSun();
 
-            //Creates an empty mesh
-            mesh = new THREE.Mesh();
-            //Adds the meash to the scene
-            scene.add(mesh);
-
-            //Orbit controls
-            //Initializes orbit controls with the camera and renderer to allow user to control the camera's rotation, zoom and pan
-            controls = new OrbitControls(camera, renderer.domElement);
-            //Sets the maximum angle for the camera's vertical rotation to 0.495π radians (just below the horizon)
-            controls.maxPolarAngle = Math.PI * 0.495;
-            //Sets the camera target
-            controls.target.set(0, 10, 0);
-            //Sets the minimum and maximum zooming distances for the camera
-            controls.minDistance = 40.0;
-            controls.maxDistance = 200.0;
-            //Updates the controls to apply the changes
-            controls.update();
 
             //Initializes the boat and adds it to the scene
             boat = new Boat(scene);
@@ -176,7 +154,7 @@ export default function Navigation() {
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
-        // Function to control the boat using switch
+        // Function to control the boat using a switch statement
         const handleKeyDown = (e) => {
             // Ensures the boat is loaded
             if (!boat) return;
@@ -200,7 +178,7 @@ export default function Navigation() {
             }
         };
 
-        // Handle key release to stop movement
+        // Handle key release to stop movement using a switch statement
         const handleKeyUp = (e) => {
             if (!boat) {
                 return;
@@ -222,31 +200,50 @@ export default function Navigation() {
             }
         };
 
+        //Defines the offset for the 3rd person camera view
+        const cameraOffset = new THREE.Vector3(-10, 16, -40);
+
         //Function to animate the scene
         function animate() {
             //Requests the next frame to keep the animation going
             requestAnimationFrame(animate);
+            
             //Gets the current time and converts it to seconds
             const time = performance.now() * 0.001;
-
-            //Moves the mesh object up and down in a sine wave pattern
-            mesh.position.y = Math.sin(time) * 20 + 5;
-            //Rotates the mesh object slowly around the x axis
-            mesh.rotation.x = time * 0.5;
-            //Rotates the mesh object slowly around the z axis
-            mesh.rotation.z = time * 0.51;
-            //Updates the water's time uniform for water animation making the water appear to move
+        
+            //Updates the water's time uniform for water animation
             water.material.uniforms['time'].value += 1.0 / 60.0;
-
-            //If the boat is loaded updates it's position and rotation and animates it
+        
+            //If the boat is loaded, updates its position and rotation
             if (boat) {
                 boat.update();
                 boat.pitchRoll(time);
+        
+                //Gets the position and direction of the boat
+                const boatPosition = boat.getBoatPosition();
+                const boatDirection = boat.getBoatDirection();
+        
+                //Ensures the position and directions are valid before proceeding
+                if (boatPosition && boatDirection) {
+                    //Calculates the camera's offset based on the boat's current rotation 
+                    const offset = cameraOffset.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), boat.boat.rotation.y);
+                    //Calculates the target camera position by adding the offset to the boat's position
+                    const targetPosition = boatPosition.clone().add(offset);
+        
+                    //Smoothly interpolates the camera position towards the target position
+                    camera.position.lerp(targetPosition, 0.1);
+        
+                    //Defines the look-at point based on the boat's direction
+                    const lookAtPoint = boatPosition.clone().add(boatDirection.clone().multiplyScalar(70));
+                    //Sets the camera to look at the calculated point
+                    camera.lookAt(lookAtPoint);
+                }
             }
-
-            //Renders the scne from the perspective of the camera
+        
+            //Renders the scene from the perspective of the camera
             renderer.render(scene, camera);
         }
+        
 
         //Initializes the scene
         init();
