@@ -4,11 +4,11 @@ import { useEffect, useRef } from 'react';
 //Imports the core Three.js library for creating and displaying 3D graphics on the web
 import * as THREE from 'three';
 
-//Imports the Water object, used to create a realistic water surface simulation with reflection and refraction
-import { Water } from 'three/examples/jsm/objects/Water';
+//Imports the createWater function
+import createWater from '../components/Water';
 
-//Imports the Sky object, used to create a customizable atmospheric skybox with effects like time of day and sun position
-import { Sky } from 'three/examples/jsm/objects/Sky';
+//Imports the createSjy function
+import createSky from '../components/Sky';
 
 //Imports the boat class
 import Boat from '../components/Boat';
@@ -58,56 +58,10 @@ export default function Navigation() {
             sun = new THREE.Vector3();
 
             //Water
-            //Creates a ;arge plane geometry for the water surface (10000 x 10000 units)
-            const waterGeometry = new THREE.PlaneGeometry(10000, 10000);
-            //Creates a new water object using the Water class simulating the water class
-            water = new Water(waterGeometry, {
-                //Specifies the resolution of the water texture (512x512 pixels)
-                textureWidth: 512,
-                textureHeight: 512,
-                //Loads map texture to simulate water ripples
-                waterNormals: new THREE.TextureLoader().load(
-                    //URL to water normal textures
-                    'https://threejs.org/examples/textures/waternormals.jpg',
-                    (texture) => {
-                        //Sets the texture wrapping mode to repeat the water texture in both directions
-                        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-                    }
-                ),
-                //Clones the sun vector to define the direction of the sunlight on the water
-                sunDirection: sun.clone(),
-                //Sets the color of the sunlight in the water (to white)
-                sunColor: 0xffffff,
-                //Sets the color of the water (to a dark greenish blue)
-                waterColor: 0x001e0f,
-                //Sets the ammount of distortion in the water ripples
-                distortionScale: 3.7,
-                //Determines if the fog should affect the water (enabled if the scene has fog)
-                fog: scene.fog !== undefined,
-            });
-            //Rotates the water surface to lie flat (by rotating it  by -90 or -π/2 radians around the x axis)
-            water.rotation.x = -Math.PI / 2;
-            //Adds the water to the scene so it is rendered
-            scene.add(water);
+            water = createWater(scene, sun);
 
-            // Sky
-            //Creates a new sky object to simulate an skybox with atmospheric effects
-            const sky = new Sky();
-            //Scales the skybox to e 10000 units large so it covers the scene
-            sky.scale.setScalar(10000);
-            //Adds the skybox to the scene
-            scene.add(sky);
-
-            //Accesses the uniforms of the sky material (parameters controlling the sky's appearance)
-            const skyUniforms = sky.material.uniforms;
-            //Sets the turbidity of the sky
-            skyUniforms['turbidity'].value = 10;
-            //Sets the scattering effect of the light in the atmosphere
-            skyUniforms['rayleigh'].value = 2;
-            //Sets how much of the light scatters in the atmosphere based on particles in the air
-            skyUniforms['mieCoefficient'].value = 0.002;
-            //Adjusts the directionality of the light scattering
-            skyUniforms['mieDirectionalG'].value = 0.8;
+            // // Sky
+            const { sky } = createSky(scene);
 
             //Parameters for the sun position
             const parameters = {
