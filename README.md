@@ -26,6 +26,9 @@ The sea effect in this portfolio was adapted from the [Three.js Sea Example](htt
 
 This work's boat is based on **"Boat 4K V2"** by [gogiart](https://sketchfab.com/agt14032013), licensed under [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/). You can view the model [here](https://sketchfab.com/3d-models/boat-4k-v2-694a88d9ce644110875c9ba4e1c0ebf5).
 
+This work's bottle is based on **"Message in a Bottle"** by [rollthebryce](https://sketchfab.com/rollthebryce), licensed under [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/). You can view the model [here](https://sketchfab.com/3d-models/message-in-a-bottle-2e738dfccbf34ec4bfbaf2c1d1203911).
+
+
 
 
 ## License

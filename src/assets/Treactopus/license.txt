@@ -1,0 +1,11 @@
+Model Information:
+* title:	Greedy Octopus's Treasure Chest
+* source:	https://sketchfab.com/3d-models/greedy-octopuss-treasure-chest-b5648165558e40419f766989e461731d
+* author:	Vetech82 (https://sketchfab.com/Vetech82)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Greedy Octopus's Treasure Chest" (https://sketchfab.com/3d-models/greedy-octopuss-treasure-chest-b5648165558e40419f766989e461731d) by Vetech82 (https://sketchfab.com/Vetech82) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

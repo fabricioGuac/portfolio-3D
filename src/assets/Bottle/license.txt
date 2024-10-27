@@ -1,0 +1,11 @@
+Model Information:
+* title:	Message in a Bottle
+* source:	https://sketchfab.com/3d-models/message-in-a-bottle-2e738dfccbf34ec4bfbaf2c1d1203911
+* author:	rollthebryce (https://sketchfab.com/rollthebryce)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Message in a Bottle" (https://sketchfab.com/3d-models/message-in-a-bottle-2e738dfccbf34ec4bfbaf2c1d1203911) by rollthebryce (https://sketchfab.com/rollthebryce) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

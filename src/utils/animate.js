@@ -1,10 +1,10 @@
 //Imports the core Three.js library for creating and displaying 3D graphics on the web
 import * as THREE from 'three';
 
-export default function animate(renderer, scene, camera, boat, water, cameraOffset) {
+export default function animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse) {
 
     //Requests the next frame to keep the animation going
-    requestAnimationFrame(() => animate(renderer, scene, camera, boat, water, cameraOffset));
+    requestAnimationFrame(() => animate(renderer, scene, camera, boat, water, cameraOffset,islands , labelRenderer, raycaster, mouse));
 
     //Gets the current time and converts it to seconds
     const time = performance.now() * 0.001;
@@ -41,8 +41,50 @@ export default function animate(renderer, scene, camera, boat, water, cameraOffs
             //Sets the camera to look at the calculated point
             camera.lookAt(lookAtPoint);
         }
+
+        if (boat.boat){
+
+            const boatBoundingBox = new THREE.Box3().setFromObject(boat.boat);
+
+            // boatBoundingBox.expandByScalar(-8);
+            islands.forEach((island) => {
+                island.checkCollision(boatBoundingBox);
+            });
+        }
     }
+
+
+    let hoverTimeouts = {}; 
+
+if (islands) {
+    raycaster.current.setFromCamera(mouse.current, camera);
+    const intersects = raycaster.current.intersectObjects(islands.flatMap(island => island.meshes), true);
+
+    islands.forEach(island => {
+        const isIntersected = intersects.some(intersect => island.meshes.includes(intersect.object));
+
+        
+        if (isIntersected && !island.isHovered) {
+            island.hoverEffect();
+            island.isHovered = true;
+
+            
+            if (hoverTimeouts[island.nameTag]) {
+                clearTimeout(hoverTimeouts[island.nameTag]);
+            }
+        } else if (!isIntersected && island.isHovered) {
+            
+            hoverTimeouts[island.nameTag] = setTimeout(() => {
+                island.resetScale();
+                island.isHovered = false;
+            }, 300); 
+        }
+    });
+}
+
 
     //Renders the scene from the perspective of the camera
     renderer.render(scene, camera);
+
+    labelRenderer.render(scene, camera);
 }

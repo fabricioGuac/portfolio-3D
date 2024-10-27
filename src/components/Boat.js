@@ -21,6 +21,7 @@ export default class Boat {
             //Sets the initial properties for the boat
             //Sets the scale for the boat model
             this.boat.scale.set(2, 2, 2);
+
             //Sets the initial position of the boat in the scene
             this.boat.position.set(-10, 0, 50);
             //Sets the boat's rotation around the y axis

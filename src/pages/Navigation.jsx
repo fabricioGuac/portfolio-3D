@@ -1,6 +1,9 @@
 //Imports useEffect and useRef  from React, essential hooks for managing side effects and referencing DOM elements
 import { useEffect, useRef } from 'react';
 
+//Imports useNavigate to enable programatic navigation between views
+import { useNavigate } from 'react-router-dom';
+
 //Imports the core Three.js library for creating and displaying 3D graphics on the web
 import * as THREE from 'three';
 
@@ -21,6 +24,14 @@ export default function Navigation() {
     //Initializes a ref to store a reference to the container DOM element for the 3D scene
     const containerRef = useRef(null);
 
+    //Initializes the navigate function using the useNavigate hook
+    const navigate = useNavigate();
+
+
+    //Stuff for the mouse 
+    const mouse = useRef(new THREE.Vector2());
+    const raycaster = useRef(new THREE.Raycaster());
+
     //Sets up the 3D scene when the component is mounted
     useEffect(() => {
         
@@ -28,7 +39,7 @@ export default function Navigation() {
         const container = containerRef.current;
 
         //Initializes the key variables for the threejs scene
-        const { scene, camera, renderer, water, sun, sky, boat } = initializeScene(container);
+        const { scene, camera, renderer, water, sun, sky, boat, islands, labelRenderer } = initializeScene(container, navigate);
 
 
             //Parameters for the sun position
@@ -52,17 +63,42 @@ export default function Navigation() {
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
+        function onMouseMove(e){
+            mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+            mouse.current.y = -(e.clientY / window.innerWidth) * 2 + 1;
+        }
+        
+        
+
+        function onClick() {
+            const intersects = raycaster.current.intersectObjects(islands.flatMap(island => island.meshes));
+
+            if(intersects.length > 0) {
+                const intersectedMesh = intersects[0].object;
+                
+
+                const intersectedIsland = islands.find(island => island.meshes.some(mesh => mesh === intersectedMesh));
+
+
+                if(intersectedIsland){
+                    intersectedIsland.handleClick();
+                    console.log('Clicked on ', intersectedIsland);
+                }
+            }
+        }
 
         //Defines the offset for the 3rd person camera view
         const cameraOffset = new THREE.Vector3(-10, 16, -40);
 
-        // //Starts the animation loop
-        animate(renderer, scene, camera, boat, water, cameraOffset);
+        //Starts the animation loop
+        animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse );
 
         //Adds the event listeners event listeners
         window.addEventListener('keydown', handleKeyDown(boat));
         window.addEventListener('keyup', handleKeyUp(boat));
         window.addEventListener('resize', onWindowResize);
+        window.addEventListener('click', onClick);
+        window.addEventListener('mousemove', onMouseMove);
 
         // Cleanup function to remove the renderer and event listeners when the component unmounts
         return () => {

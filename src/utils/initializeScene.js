@@ -1,6 +1,10 @@
 //Imports the core Three.js library for creating and displaying 3D graphics on the web
 import * as THREE from 'three';
 
+// import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
+import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
+
+
 //Imports the createWater function
 import createWater from '../components/Water';
 
@@ -10,8 +14,12 @@ import createSky from '../components/Sky';
 //Imports the boat class
 import Boat from '../components/Boat';
 
+//Imports the island class
+import Island from '../components/Island';
+
+
 //Initializes the scene
-export default function initializeScene(container) {
+export default function initializeScene(container, navigate) {
     //Creates a new Threejs scene
     const scene = new THREE.Scene();
 
@@ -52,8 +60,22 @@ export default function initializeScene(container) {
     // Sky
     const { sky } = createSky(scene);
 
+    // const navigate = useNavigate();
+
     //Initializes the boat and adds it to the scene
     const boat = new Boat(scene);
 
-    return {scene, camera, renderer, water, sun, sky, boat};
+    const skillIsland = new Island(scene,'src/assets/Boat/scene.gltf',{x: -90, y: 2, z: -160},'/skills', 'Skills', navigate);
+    const contactBOTTLE = new Island(scene,'src/assets/Bottle/scene.gltf',{x: -10, y: 5, z: -200},'/contact', 'Contact',navigate);
+    const PortfolioIsland = new Island(scene,'src/assets/Boat/scene.gltf',{x: 70, y: 0, z: -220},'/projects', 'Portfolio',navigate);
+    const aboutMeIsland = new Island(scene,'src/assets/Boat/scene.gltf',{x: 120, y: 0, z: -180},'/aboutMe', 'About me',navigate);
+
+
+    const labelRenderer = new CSS2DRenderer();
+    labelRenderer.setSize(window.innerWidth, window.innerHeight);
+    labelRenderer.domElement.style.position = 'absolute';
+    labelRenderer.domElement.style.top = '0px';
+    container.appendChild(labelRenderer.domElement);
+
+    return {scene, camera, renderer, water, sun, sky, boat, islands: [skillIsland, PortfolioIsland, contactBOTTLE, aboutMeIsland], labelRenderer};
 }
