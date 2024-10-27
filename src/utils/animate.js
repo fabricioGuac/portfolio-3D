@@ -1,6 +1,7 @@
 //Imports the core Three.js library for creating and displaying 3D graphics on the web
 import * as THREE from 'three';
 
+//Defines the animate function to update the scene and render the animation loop continuosly
 export default function animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse) {
 
     //Requests the next frame to keep the animation going
@@ -13,11 +14,11 @@ export default function animate(renderer, scene, camera, boat, water, cameraOffs
     water.material.uniforms['time'].value += 1.0 / 60.0;
 
     //If the boat is loaded, updates its position and rotation
-    if (boat) {
+    if (boat.boat) {
         //Updates boat position
         boat.update();
 
-        //Animates the boat pitching and rolling
+        //Animates the boat pitching and rolling movements
         boat.pitchRoll(time);
 
         //Gets the position and direction of the boat
@@ -42,50 +43,67 @@ export default function animate(renderer, scene, camera, boat, water, cameraOffs
             camera.lookAt(lookAtPoint);
         }
 
-        if (boat.boat) {
+        //Sets the bounding box for the boat
+        const boatBoundingBox = new THREE.Box3().setFromObject(boat.boat);
 
-            const boatBoundingBox = new THREE.Box3().setFromObject(boat.boat);
-
-
-            boatBoundingBox.expandByScalar(-4);
-            islands.forEach((island) => {
-                island.checkCollision(boatBoundingBox);
-            });
-        }
+        //Reduces the bounding box
+        boatBoundingBox.expandByScalar(-4);
+        //Iterates through each island to check for potential collisions with the boat using the bounding box
+        islands.forEach((island) => {
+            island.checkCollision(boatBoundingBox);
+        });
     }
 
+    //Object to manage the hover timeouts to control the hover effect
+    const hoverTimeouts = {};
 
-    let hoverTimeouts = {};
-
+    //Ensures the islands are loaded
     if (islands) {
+        //Sets the raycaster's ray from the camera through the current mouse position
         raycaster.current.setFromCamera(mouse.current, camera);
-        const intersects = raycaster.current.intersectObjects(islands.flatMap(island => island.meshes), true);
 
+        //Filters islands whose bounding boxes are intersected by the raycaster's ray
+        const intersectingBoundingBoxes = islands.filter(island =>
+            island.boundingBox && raycaster.current.ray.intersectsBox(island.boundingBox)
+        );
+
+        //Creates a set of the islands intersected by the ray
+        const intersectedIslands = new Set(intersectingBoundingBoxes.map(island => island));
+
+        //Iterates through each island to check it's hovered state
         islands.forEach(island => {
-            const isIntersected = intersects.some(intersect => island.meshes.includes(intersect.object));
+            //Checks if the island is currently intersected by the ray
+            const isIntersected = intersectedIslands.has(island);
 
-
+            //Conditional to check if the island is intersected and not hovered
             if (isIntersected && !island.isHovered) {
+
+                //Applies the hover effect
                 island.hoverEffect();
+                //Sets the isHovered flag to true
                 island.isHovered = true;
 
-
+                //Clears any existing timeout for the island to reset it's hovered state
                 if (hoverTimeouts[island.nameTag]) {
                     clearTimeout(hoverTimeouts[island.nameTag]);
                 }
-            } else if (!isIntersected && island.isHovered) {
+            }
 
+            //Conditional to check if the island is not intersected but it is hovered
+            else if (!isIntersected && island.isHovered) {
+
+                //Sets a timeout to reset the hover efect after 300 miliseconds to provide a smoother transition
                 hoverTimeouts[island.nameTag] = setTimeout(() => {
+                    //Removes the hover effect by reseting the island scale
                     island.resetScale();
+                    //Sets the isHovered flag to false
                     island.isHovered = false;
-                }, 300);
+                }, 3000);
             }
         });
     }
 
-
-    //Renders the scene from the perspective of the camera
+    //Renders the scene and the lable renderer
     renderer.render(scene, camera);
-
     labelRenderer.render(scene, camera);
 }

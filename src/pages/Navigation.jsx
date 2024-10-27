@@ -28,13 +28,13 @@ export default function Navigation() {
     const navigate = useNavigate();
 
 
-    //Stuff for the mouse 
+    //References for mouse position and raycasting for detecting intersections 
     const mouse = useRef(new THREE.Vector2());
     const raycaster = useRef(new THREE.Raycaster());
 
     //Sets up the 3D scene when the component is mounted
     useEffect(() => {
-        
+
         //Stores the reference to the container DOM element where the 3D scene will be rendered
         const container = containerRef.current;
 
@@ -42,16 +42,16 @@ export default function Navigation() {
         const { scene, camera, renderer, water, sun, sky, boat, islands, labelRenderer } = initializeScene(container, navigate);
 
 
-            //Parameters for the sun position
-            const parameters = {
-                //Defines the sun elevation in the sky
-                elevation: 1,
-                //Positions the sun in the horizon (azimuth 180 = south)
-                azimuth: 180,
-            };
+        //Parameters for the sun position
+        const parameters = {
+            //Defines the sun elevation in the sky
+            elevation: 1,
+            //Positions the sun in the horizon (azimuth 180 = south)
+            azimuth: 180,
+        };
 
-            //Calls the updateSun function to apply the sun's position when the scene is initialized
-            updateSun(sun, sky, water, parameters);
+        //Calls the updateSun function to apply the sun's position when the scene is initialized
+        updateSun(sun, sky, water, parameters);
 
         //Function to handle window resizing
         function onWindowResize() {
@@ -61,38 +61,62 @@ export default function Navigation() {
             camera.updateProjectionMatrix();
             //Resizes the renderer to match the new window dimensions
             renderer.setSize(window.innerWidth, window.innerHeight);
-
+            //Resizes the labelRenderer to match the new window dimensions
             labelRenderer.setSize(window.innerWidth, window.innerHeight);
         }
 
+        //Function to update the mouse coordinates on mouse movement
         function onMouseMove(e) {
+
+            //Normalizes mouse x coordinates
+            //Converts pixel position (0 to window.innerWidth) to normalized device coordinate (-1 to 1)
+            //Divides by window.innerWidth to get a range from 0 to 1.
+            //Multiplies by 2 to stretch the range to [0, 2].
+            //Subtracts 1 to shift the range to [-1, 1].
             mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+
+
+            //Normalizes mouse y coordinates
+            //Converts pixel position (0 to window.innerHeight) to normalized device coordinate (-1 to 1)
+            //Divides by window.innerHeight to get a range from 0 to 1.
+            //Negates the result to flip the range (top becomes 0, bottom becomes -1).
+            //Multiplies by 2 to stretch the range to [0, -2].
+            //Adds 1 to shift the range to [-1, 1].
             mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
         }
-        
 
+
+        //Function to handle click events
         function onClick() {
-            const intersects = raycaster.current.intersectObjects(islands.flatMap(island => island.meshes));
 
-            if(intersects.length > 0) {
-                const intersectedMesh = intersects[0].object;
-                
+            //Sets the raycaster from the mouse position
+            raycaster.current.setFromCamera(mouse.current, camera);
 
-                const intersectedIsland = islands.find(island => island.meshes.some(mesh => mesh === intersectedMesh));
+            //Filters the islands to find the ones that the ray intersects with
+            const intersectedBoundingBoxes = islands.filter(island =>
+                island.boundingBox && raycaster.current.ray.intersectsBox(island.boundingBox)
+            );
 
+            //If an island was clicked trigger it's click handler
+            if (intersectedBoundingBoxes.length > 0) {
 
-                if(intersectedIsland){
+                //Gets the first intersected island from the filtered array
+                const intersectedIsland = intersectedBoundingBoxes[0];
+                //Ensures there is an intersected island available
+                if (intersectedIsland) {
+                    //Handles the click event for the island
                     intersectedIsland.handleClick();
                     console.log('Clicked on ', intersectedIsland);
                 }
             }
         }
 
+
         //Defines the offset for the 3rd person camera view
         const cameraOffset = new THREE.Vector3(-10, 16, -40);
 
         //Starts the animation loop
-        animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse );
+        animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse);
 
         //Adds the event listeners event listeners
         window.addEventListener('keydown', handleKeyDown(boat));
@@ -111,8 +135,9 @@ export default function Navigation() {
             window.removeEventListener('keyup', handleKeyUp(boat));
             //Removes the resize event listener
             window.removeEventListener('resize', onWindowResize);
-
+            //Removes the mousemove event listener
             window.removeEventListener('mousemove', onMouseMove);
+            //Removes the click event listener
             window.removeEventListener('click', onClick);
         };
     }, []);

@@ -60,22 +60,23 @@ export default function initializeScene(container, navigate) {
     // Sky
     const { sky } = createSky(scene);
 
-    // const navigate = useNavigate();
 
     //Initializes the boat and adds it to the scene
     const boat = new Boat(scene);
 
-    const skillIsland = new Island(scene,'src/assets/Treactopus/scene.gltf',{x: -90, y: 2, z: -160},'/skills', 'Skills', navigate);
-    const contactBOTTLE = new Island(scene,'src/assets/Bottle/scene.gltf',{x: -10, y: 5, z: -200},'/contact', 'Contact',navigate);
-    const PortfolioIsland = new Island(scene,'src/assets/Boat/scene.gltf',{x: 70, y: 0, z: -220},'/projects', 'Portfolio',navigate);
-    const aboutMeIsland = new Island(scene,'src/assets/Lighthouse/scene.gltf',{x: 120, y: 0, z: -180},'/aboutMe', 'About me',navigate);
+    //Initializes the islands
+    const skillIsland = new Island(scene,'src/assets/Treactopus/scene.gltf',{x: -90, y: 2, z: -160},'/skills', 'Skills', navigate, 3, 10);
+    const contactBottle = new Island(scene,'src/assets/Bottle/scene.gltf',{x: -10, y: 5, z: -200},'/contact', 'Contact',navigate, 8, 3.5);
+    const PortfolioIsland = new Island(scene,'src/assets/ShellIsland/scene.gltf',{x: 70, y: -2, z: -320},'/projects', 'Projects',navigate, 6, 6);
+    const aboutMeIsland = new Island(scene,'src/assets/TropicalIsland/scene.gltf',{x: 175, y: -2, z: -180},'/aboutMe', 'About me',navigate, 0.1, 300);
 
 
+    //Configures the css2d renderer
     const labelRenderer = new CSS2DRenderer();
     labelRenderer.setSize(window.innerWidth, window.innerHeight);
     labelRenderer.domElement.style.position = 'absolute';
     labelRenderer.domElement.style.top = '0px';
     container.appendChild(labelRenderer.domElement);
 
-    return {scene, camera, renderer, water, sun, sky, boat, islands: [skillIsland, PortfolioIsland, contactBOTTLE, aboutMeIsland], labelRenderer};
+    return {scene, camera, renderer, water, sun, sky, boat, islands: [skillIsland, PortfolioIsland, contactBottle, aboutMeIsland], labelRenderer};
 }

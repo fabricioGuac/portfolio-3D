@@ -24,9 +24,36 @@ N/A
 
 The sea effect in this portfolio was adapted from the [Three.js Sea Example](https://threejs.org/examples/webgl_shaders_ocean.html).
 
-This work's boat is based on **"Boat 4K V2"** by [gogiart](https://sketchfab.com/agt14032013), licensed under [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/). You can view the model [here](https://sketchfab.com/3d-models/boat-4k-v2-694a88d9ce644110875c9ba4e1c0ebf5).
+### Models Used
 
-This work's bottle is based on **"Message in a Bottle"** by [rollthebryce](https://sketchfab.com/rollthebryce), licensed under [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/). You can view the model [here](https://sketchfab.com/3d-models/message-in-a-bottle-2e738dfccbf34ec4bfbaf2c1d1203911).
+- **Boat**
+- Title: "Boat 4K V2"
+- Source: [View Model](https://sketchfab.com/3d-models/boat-4k-v2-694a88d9ce644110875c9ba4e1c0ebf5)
+- Author: [gogiart](https://sketchfab.com/agt14032032013)
+- License: [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)
+
+- **Bottle**
+- Title: "Message in a Bottle"
+- Source: [View Model](https://sketchfab.com/3d-models/message-in-a-bottle-2e738dfccbf34ec4bfbaf2c1d1203911)
+- Author: [rollthebryce](https://sketchfab.com/rollthebryce)
+- License: [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)
+
+- **Octopus Treasure Chest**
+- Title: "Greedy Octopus's Treasure Chest"
+- Source: [View Model](https://sketchfab.com/3d-models/greedy-octopuss-treasure-chest-b5648165558e40419f766989e461731d)
+- Author: [Vetech82](https://sketchfab.com/Vetech82)
+- License: [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)
+
+- **Shells**- Title: "By the Sea Side - hand painted shells"
+- Source: [View Model](https://sketchfab.com/3d-models/by-the-sea-side-hand-painted-shells-0948b5dcafdb4551a3eb20220b82bfaa)
+- Author: [Shareen](https://sketchfab.com/sh.busaidi)
+- License: [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)
+
+- **Island**
+- Title: "Tropical Island"
+- Source: [View Model](https://sketchfab.com/3d-models/tropical-island-69059d6628c74d8a9dd1f63f65eed224)
+- Author: [thomas_125](https://sketchfab.com/thomas_125)
+- License: [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)
 
 
 
