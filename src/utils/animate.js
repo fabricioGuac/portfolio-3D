@@ -4,7 +4,7 @@ import * as THREE from 'three';
 export default function animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse) {
 
     //Requests the next frame to keep the animation going
-    requestAnimationFrame(() => animate(renderer, scene, camera, boat, water, cameraOffset,islands , labelRenderer, raycaster, mouse));
+    requestAnimationFrame(() => animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse));
 
     //Gets the current time and converts it to seconds
     const time = performance.now() * 0.001;
@@ -42,11 +42,12 @@ export default function animate(renderer, scene, camera, boat, water, cameraOffs
             camera.lookAt(lookAtPoint);
         }
 
-        if (boat.boat){
+        if (boat.boat) {
 
             const boatBoundingBox = new THREE.Box3().setFromObject(boat.boat);
 
-            // boatBoundingBox.expandByScalar(-8);
+
+            boatBoundingBox.expandByScalar(-4);
             islands.forEach((island) => {
                 island.checkCollision(boatBoundingBox);
             });
@@ -54,33 +55,33 @@ export default function animate(renderer, scene, camera, boat, water, cameraOffs
     }
 
 
-    let hoverTimeouts = {}; 
+    let hoverTimeouts = {};
 
-if (islands) {
-    raycaster.current.setFromCamera(mouse.current, camera);
-    const intersects = raycaster.current.intersectObjects(islands.flatMap(island => island.meshes), true);
+    if (islands) {
+        raycaster.current.setFromCamera(mouse.current, camera);
+        const intersects = raycaster.current.intersectObjects(islands.flatMap(island => island.meshes), true);
 
-    islands.forEach(island => {
-        const isIntersected = intersects.some(intersect => island.meshes.includes(intersect.object));
+        islands.forEach(island => {
+            const isIntersected = intersects.some(intersect => island.meshes.includes(intersect.object));
 
-        
-        if (isIntersected && !island.isHovered) {
-            island.hoverEffect();
-            island.isHovered = true;
 
-            
-            if (hoverTimeouts[island.nameTag]) {
-                clearTimeout(hoverTimeouts[island.nameTag]);
+            if (isIntersected && !island.isHovered) {
+                island.hoverEffect();
+                island.isHovered = true;
+
+
+                if (hoverTimeouts[island.nameTag]) {
+                    clearTimeout(hoverTimeouts[island.nameTag]);
+                }
+            } else if (!isIntersected && island.isHovered) {
+
+                hoverTimeouts[island.nameTag] = setTimeout(() => {
+                    island.resetScale();
+                    island.isHovered = false;
+                }, 300);
             }
-        } else if (!isIntersected && island.isHovered) {
-            
-            hoverTimeouts[island.nameTag] = setTimeout(() => {
-                island.resetScale();
-                island.isHovered = false;
-            }, 300); 
-        }
-    });
-}
+        });
+    }
 
 
     //Renders the scene from the perspective of the camera

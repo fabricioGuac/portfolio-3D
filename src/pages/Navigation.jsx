@@ -61,13 +61,14 @@ export default function Navigation() {
             camera.updateProjectionMatrix();
             //Resizes the renderer to match the new window dimensions
             renderer.setSize(window.innerWidth, window.innerHeight);
+
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
         }
 
-        function onMouseMove(e){
+        function onMouseMove(e) {
             mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
-            mouse.current.y = -(e.clientY / window.innerWidth) * 2 + 1;
+            mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
         }
-        
         
 
         function onClick() {
@@ -110,6 +111,9 @@ export default function Navigation() {
             window.removeEventListener('keyup', handleKeyUp(boat));
             //Removes the resize event listener
             window.removeEventListener('resize', onWindowResize);
+
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('click', onClick);
         };
     }, []);
 

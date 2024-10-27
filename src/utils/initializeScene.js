@@ -65,10 +65,10 @@ export default function initializeScene(container, navigate) {
     //Initializes the boat and adds it to the scene
     const boat = new Boat(scene);
 
-    const skillIsland = new Island(scene,'src/assets/Boat/scene.gltf',{x: -90, y: 2, z: -160},'/skills', 'Skills', navigate);
+    const skillIsland = new Island(scene,'src/assets/Treactopus/scene.gltf',{x: -90, y: 2, z: -160},'/skills', 'Skills', navigate);
     const contactBOTTLE = new Island(scene,'src/assets/Bottle/scene.gltf',{x: -10, y: 5, z: -200},'/contact', 'Contact',navigate);
     const PortfolioIsland = new Island(scene,'src/assets/Boat/scene.gltf',{x: 70, y: 0, z: -220},'/projects', 'Portfolio',navigate);
-    const aboutMeIsland = new Island(scene,'src/assets/Boat/scene.gltf',{x: 120, y: 0, z: -180},'/aboutMe', 'About me',navigate);
+    const aboutMeIsland = new Island(scene,'src/assets/Lighthouse/scene.gltf',{x: 120, y: 0, z: -180},'/aboutMe', 'About me',navigate);
 
 
     const labelRenderer = new CSS2DRenderer();

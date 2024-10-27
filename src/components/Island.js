@@ -35,31 +35,39 @@ export default class Island {
 
             //Sets the initial properties for the island
             //Sets the scale for the island model
-            this.island.scale.set(4,4,4);
+            this.island.scale.set(4, 4, 4);
             //Sets the initial position for the island model
-            this.island.position.set(position.x, position.y,position.z);
+            this.island.position.set(position.x, position.y, position.z);
+
+            this.island.rotation.y = -1.5;
 
             const labelDiv = document.createElement('div');
             labelDiv.className = 'islanLabel';
             labelDiv.textContent = this.nameTag;
             const label = new CSS2DObject(labelDiv);
-            label.position.set(0,10,0);
+            label.position.set(0, 10, 0);
             this.island.add(label);
 
 
             this.island.traverse((child) => {
-                if(child.isMesh) {
+                if (child.isMesh) {
                     this.meshes.push(child);
                 }
             })
 
 
             this.boundingBox = new THREE.Box3().setFromObject(this.island);
+
+
+
+
+            const boxHelper = new THREE.BoxHelper(this.island, 0xff0000); // Red color
+            scene.add(boxHelper);
         });
     }
 
     handleClick() {
-        if(this.island && !this.hasNavigated){
+        if (this.island && !this.hasNavigated) {
             console.log(this.link)
             this.navigate(this.link);
             this.hasNavigated = true;
@@ -67,14 +75,14 @@ export default class Island {
     }
 
     checkCollision(boatBoundingBox) {
-        if(this.boundingBox && this.boundingBox.intersectsBox(boatBoundingBox) && !this.hasNavigated){
-        this.handleClick();
+        if (this.boundingBox && this.boundingBox.intersectsBox(boatBoundingBox) && !this.hasNavigated) {
+            this.handleClick();
         }
     }
 
-    hoverEffect(){
-        if (this.island){
-            this.island.scale.set(8,8,8);
+    hoverEffect() {
+        if (this.island) {
+            this.island.scale.set(8, 8, 8);
         }
     }
 
