@@ -98,7 +98,7 @@ export default function animate(renderer, scene, camera, boat, water, cameraOffs
                     island.resetScale();
                     //Sets the isHovered flag to false
                     island.isHovered = false;
-                }, 3000);
+                }, 300);
             }
         });
     }

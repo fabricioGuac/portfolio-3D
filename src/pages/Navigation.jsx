@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 //Imports the core Three.js library for creating and displaying 3D graphics on the web
 import * as THREE from 'three';
 
+//Imports the Controls component
+import Controls from '../components/Controls';
+
 //Imports the function to initialize the variables for the threejs scene
 import initializeScene from '../utils/initializeScene';
 
@@ -53,17 +56,32 @@ export default function Navigation() {
         //Calls the updateSun function to apply the sun's position when the scene is initialized
         updateSun(sun, sky, water, parameters);
 
+
         //Function to handle window resizing
         function onWindowResize() {
-            //Updates the camera aspectration when the window is resized
-            camera.aspect = window.innerWidth / window.innerHeight;
+            const isPortrait = window.innerWidth < 768 && window.innerHeight > window.innerWidth;
+        
+            //If in portrait mode on mobile inverts aspect ratio for landscape effect
+            const aspectRatio = isPortrait ? window.innerHeight / window.innerWidth : window.innerWidth / window.innerHeight;
+        
+            //Updates the camera aspect ratio when the window is resized
+            camera.aspect = aspectRatio;
             //Updates the projection matrix with the new aspect ratio
             camera.updateProjectionMatrix();
-            //Resizes the renderer to match the new window dimensions
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            //Resizes the labelRenderer to match the new window dimensions
-            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        
+            //Determines dimensions based on orientation
+            const width = isPortrait ? window.innerHeight : window.innerWidth;
+            const height = isPortrait ? window.innerWidth : window.innerHeight;
+        
+            //Update renderer and label renderer sizes
+            renderer.setSize(width, height);
+            labelRenderer.setSize(width, height);
         }
+        
+        // Add event listener for resizing
+        window.addEventListener('resize', onWindowResize);
+        onWindowResize(); // Initial call to set up sizes
+        
 
         //Function to update the mouse coordinates on mouse movement
         function onMouseMove(e) {
@@ -144,7 +162,8 @@ export default function Navigation() {
 
     return (
         <div>
-            <div ref={containerRef} ></div>
+            {/* <Controls boat={boat}/> */}
+            <div ref={containerRef} className="sceneContainer"></div>
         </div>
     );
 }

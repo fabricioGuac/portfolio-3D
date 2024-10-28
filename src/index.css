@@ -1,11 +1,44 @@
-*{
+ * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-.islanLabel{
+.islanLabel {
   font-size: 24px;
   font-family: Arial, sans-serif;
   padding: 5px;
   border-radius: 5px;
-} 
+}
+
+.sceneContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .sceneContainer {
+    transform: rotate(90deg);
+    transform-origin: center;
+    width: 100vh;
+    height: 100vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+}
+
+@media (min-width: 768px) and (max-height: 1024px) {
+  .sceneContainer {
+    transform: none;
+    width: auto;
+    height: auto;
+    top: auto; 
+    left: auto; 
+    transform: translate(0, 0);
+  }
+}
