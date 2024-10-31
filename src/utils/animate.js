@@ -2,10 +2,10 @@
 import * as THREE from 'three';
 
 //Defines the animate function to update the scene and render the animation loop continuosly
-export default function animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse) {
+export default function animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse, setIshoveringIsland) {
 
     //Requests the next frame to keep the animation going
-    requestAnimationFrame(() => animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse));
+    requestAnimationFrame(() => animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse, setIshoveringIsland));
 
     //Gets the current time and converts it to seconds
     const time = performance.now() * 0.001;
@@ -83,6 +83,9 @@ export default function animate(renderer, scene, camera, boat, water, cameraOffs
                 //Sets the isHovered flag to true
                 island.isHovered = true;
 
+                //Sets the state variable to true to indicate that the cursor should display the anchor emoji when hovering over an island
+                setIshoveringIsland(true);
+
                 //Clears any existing timeout for the island to reset it's hovered state
                 if (hoverTimeouts[island.nameTag]) {
                     clearTimeout(hoverTimeouts[island.nameTag]);
@@ -98,6 +101,9 @@ export default function animate(renderer, scene, camera, boat, water, cameraOffs
                     island.resetScale();
                     //Sets the isHovered flag to false
                     island.isHovered = false;
+                    //Sets the state variable to false to indicate that the cursor should revert to the default style when not hovering over an island
+                    setIshoveringIsland(false);
+
                 }, 300);
             }
         });

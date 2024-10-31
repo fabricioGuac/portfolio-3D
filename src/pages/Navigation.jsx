@@ -1,5 +1,5 @@
 //Imports useEffect and useRef  from React, essential hooks for managing side effects and referencing DOM elements
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 //Imports useNavigate to enable programatic navigation between views
 import { useNavigate } from 'react-router-dom';
@@ -35,6 +35,14 @@ export default function Navigation() {
     const mouse = useRef(new THREE.Vector2());
     const raycaster = useRef(new THREE.Raycaster());
 
+    //Reference for the boat
+    const boatRef = useRef(null);
+
+    //State variable to indicate when the boat is ready for rendering Controls
+    const [isBoatReady, setIsBoatReady] = useState(false);
+    //State variable to manage the hover cursor
+    const [isHoveringIsland, setIsHoveringIsland] = useState(false);
+
     //Sets up the 3D scene when the component is mounted
     useEffect(() => {
 
@@ -43,6 +51,12 @@ export default function Navigation() {
 
         //Initializes the key variables for the threejs scene
         const { scene, camera, renderer, water, sun, sky, boat, islands, labelRenderer } = initializeScene(container, navigate);
+
+        //Sets the boat instance in the ref
+        boatRef.current = boat;
+
+        //Updates state to true once the boat reference is set to trigger Controls render
+        setIsBoatReady(true);
 
 
         //Parameters for the sun position
@@ -106,7 +120,6 @@ export default function Navigation() {
 
         //Function to handle click events
         function onClick() {
-
             //Sets the raycaster from the mouse position
             raycaster.current.setFromCamera(mouse.current, camera);
 
@@ -134,9 +147,9 @@ export default function Navigation() {
         const cameraOffset = new THREE.Vector3(-10, 16, -40);
 
         //Starts the animation loop
-        animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse);
+        animate(renderer, scene, camera, boat, water, cameraOffset, islands, labelRenderer, raycaster, mouse, setIsHoveringIsland);
 
-        //Adds the event listeners event listeners
+        //Adds the event listeners
         window.addEventListener('keydown', handleKeyDown(boat));
         window.addEventListener('keyup', handleKeyUp(boat));
         window.addEventListener('resize', onWindowResize);
@@ -161,8 +174,13 @@ export default function Navigation() {
     }, []);
 
     return (
-        <div>
-            {/* <Controls boat={boat}/> */}
+        <div style={{
+            cursor: isHoveringIsland
+                ? 'url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22black%22><text x=%220%22 y=%2218%22 font-size=%2216%22>⚓</text></svg>") 12 12, auto'
+                : 'auto'
+        }}>
+            {isBoatReady && boatRef.current && <Controls boat={boatRef.current} />}
+
             <div ref={containerRef} className="sceneContainer"></div>
         </div>
     );

@@ -1,44 +1,177 @@
  * {
+  /* Removes default margin */
   margin: 0;
+  /* Removes default padding */
   padding: 0;
+  /* Includes padding and border in the element's total width and height */
   box-sizing: border-box;
 }
 
 .islanLabel {
+  /* Sets the font size for the island labels */
   font-size: 24px;
+  /* Sets the font family for the island labels */
   font-family: Arial, sans-serif;
+  /* Sets the padding around teh label */
   padding: 5px;
+  /* Gives rounded corners for the labels */
   border-radius: 5px;
 }
 
 .sceneContainer {
+  /* Sets a fixed position to cover the viewport */
   position: fixed;
+  /* Aligns to the top of the viewport */
   top: 0;
+  /* Aligns to the left of the viewport */
   left: 0;
+  /* Sets if to the full width of the viewport */
   width: 100vw;
+  /* Sets if to the full height of the viewport */
   height: 100vh;
+  /* Hides any overflowing content */
   overflow: hidden;
 }
 
-@media (max-width: 768px) and (orientation: portrait) {
-  .sceneContainer {
-    transform: rotate(90deg);
-    transform-origin: center;
-    width: 100vh;
-    height: 100vw;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
+
+
+
+.controlsOverlay {
+  /* Positions the element absolutly within its nearest positioned ancestor*/
+  position: absolute;
+  /* Sets the top edge of the overlay to align with the top edge of the viewport */
+  top: 0;
+  /* Sets the left edge of the overlay to align with the left edge of the viewport */
+  left: 0;
+  /* Sets the width of the overlay to 100% of the viewport width */
+  width: 100%;
+  /* Sets the height of the overlay to 100% of the viewport height */
+  height: 100%;
+  /* Sets the z index to 2 ensuring the contents appear above other elements  */
+  z-index: 2;
+
 }
 
+
+.instructions {
+  /* Positions the element absolutly within its nearest positioned ancestor*/
+  position: absolute;
+  /* Sets the instructions to 10% down from the top of it's contaiener */
+  top: 10%;
+  /* Sets the instructions to 50% of the left meaning horizontal center */
+  left: 50%;
+  /* Ensures the center of the instructions aligns with the center of the container */
+  transform: translate(-50%, -50%);
+  /* Aligns the text in the horizontal center of the container */
+  text-align: center;
+  /* Adds 1 em of padding arround the content insed the instructions box */
+  padding: 1em;
+  /* Sets a translucent dark background */
+  background-color: rgba(0, 0, 0, 0.7); 
+  /* Sets the text color to white */
+  color: white;
+  /* Slightly rounds the corners of the instructions box */
+  border-radius: 8px;
+}
+
+
+
+.joystick {
+  /* Positions the element absolutly within its nearest positioned ancestor*/
+  position: absolute;
+  /* Sets the joystick 50 pixels from the bottom of it's container */
+  bottom: 50px;
+  /* Sets the joystixj 60 pixels from the left edge of it's container */
+  left: 60px;
+  /* Sets the width of the joystick area to 100 pixels */
+  width: 100px;
+  /* Sets the heigh of the joystick area to 100 pixels */
+  height: 100px;
+  /* Sets a translucent gray background */
+  background-color: rgba(128, 128, 128, 0.6); 
+  /* Creates a circular shape */
+  border-radius: 50%;
+  /* Enables flexbox layout for the joystick */
+  display: flex;
+  /* Centers the items horizontally within the joystick area */
+  justify-content: center;
+  /* Centers the items vertically within the joystick area */
+  align-items: center;
+}
+
+.joystick-inner {
+  /* Positions the element absolutly within its nearest positioned ancestor*/
+  position: absolute;
+  /* Sets the width of the joystick inner to 30 pixels */
+  width: 30px;
+  /* Sets the height of the joystick inner to 30 pixels */
+  height: 30px;
+  /* Sets the background color to white */
+  background-color: white;
+  /* Creates a circular shape */
+  border-radius: 50%;
+}
+
+
+
+/* Media query for mobile devices in portrait orientation */
+@media (max-width: 768px) and (orientation: portrait) {
+  .sceneContainer {
+    /* Rotates the scene for landscape view */
+    transform: rotate(90deg);
+    /* Sets the rotation point to the center */
+    transform-origin: center;
+    /* Sets the width to viewport height for proper scaling */
+    width: 100vh;
+    /* Sets height to viewport width for propper scaling */
+    height: 100vw;
+    /* Centers vertically */
+    top: 50%;
+    /* Centers horizontally */
+    left: 50%;
+    /* Translates to center and rotates */
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+
+  .instructions {
+    /* Centers the instructions box after rotation */
+    transform: translate(-50%, -50%) rotate(90deg);
+    /* Sets the intructions 20% down of it's containing element */
+    top: 20%; 
+    /* Sets the instruction 90% left of it's containing element */
+    left: 90%;
+    /* Sets the width of the instructions to 70% of  the viewport */
+    width: 70vw; 
+    /* Limits the maximum width of the instructions to 300 pixels */
+    max-width: 300px; 
+    /* Limits the minimum width of the instructions to 200 pixels */
+    min-width: 200px; 
+}
+
+.instructions h1 {
+    /* Sets the font size for the heading */
+    font-size: 16px; 
+    /* Sets the line height for better readability */
+    line-height: 1.2em;
+}
+
+}
+
+/* Media query specifically for the iPad Mini in portrait orientation */
 @media (min-width: 768px) and (max-height: 1024px) {
   .sceneContainer {
+    /* Resets transformation */
     transform: none;
+    /* Allows auto width */
     width: auto;
+    /* Allows auto height */
     height: auto;
+    /* Resets top alignment */
     top: auto; 
+    /* Resets left alignment */
     left: auto; 
+    /* Resets translation */
     transform: translate(0, 0);
   }
 }
