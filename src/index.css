@@ -222,6 +222,118 @@ footer h3 {
   border-radius: 50%;
 }
 
+.form-container {
+  /* Sets the background to a dark brown, resembling a wooden desk */
+  background-color: #582d0b;
+  /* Enables flexbox layout to center the form */
+  display: flex;
+  /* Horizontally centers the form */
+  justify-content: center;
+  /* Vertically centers the form */
+  align-items: center;
+  /* Sets height to 90% of the viewport */
+  height: 90vh;
+}
+
+.form {
+  /* Light yellow background for an old paper look */
+  background-color: #fcedc5;
+  /* Dark brown border to define the paper edges */
+  border: 2px solid #5b3a29;
+  /* Adds padding arpund the form content */
+  padding: 2rem;
+  /* Shadow for depth and separation from background */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  /* Limits the form to 500 pixels */
+  max-width: 500px;
+  /* Ensures the form takes full width within it's container */
+  width: 100%;
+  /* Antique look font for the form text */
+  font-family: 'Allura', cursive;
+  /* Dark text color for readability */
+  color: #333;
+  /* Sets a larger font size for visibility */
+  font-size: 2rem;
+}
+
+.form-group {
+  /* Adds sace below each form field for separation */
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  /* Ensures the labels appear on their own line above inputs */
+  display: block;
+  /* Adds space below the label for readability */
+  margin-bottom: 1.2rem;
+}
+
+.input-field {
+  /* Full width for the input fields */
+  width: 100%;
+  /* Paddding within the input for comfortable typing space */
+  padding: 0.7rem;
+  /* Dark brown border for contrast */
+  border: 1px solid #5b3a29;
+  /* Slightly rounds the corners */
+  border-radius: 5px;
+  /* Sets a larger font size for visibility */
+  font-size: 2rem;
+  /* Light yellow background color for a different old paper effect */
+  background-color: #fdf6e3;
+  /* Antique look font for the form text */
+  font-family: 'Allura', cursive;
+}
+
+.input-field:focus {
+  /* Removes default blue outline on focus */
+  outline: none;
+  /* Highlights border color when input is active */
+  border-color: #d9b26b ;
+}
+
+.error-message {
+  /* Red color to indicate error */
+  color: #be2d28;
+  /* Centers error message text */
+  text-align: center;
+  /* Adds space below the error message */
+  margin-bottom: 1.2rem;
+}
+
+.success-message {
+  /* Green color to indicate success */
+  color: #35be28;
+  /* Centers success message text */
+  text-align: center;
+  /* Adds space below the success message */
+  margin-bottom: 1.2rem;
+}
+
+.submit-button {
+  /* Dark backround for the button */
+  background-color: #5b3a29;
+  /* White text for good contrast */
+  color: white;
+  /* Padding for larger clickable area */
+  padding: 0.7rem 1.3rem;
+  /* Removes default border */
+  border : none;
+  /* Slightly rounds the corners */
+  border-radius: 5px;
+  /* Gives it a pointer cursor to indicate its clickable */
+  cursor: pointer;
+  /* Slightly smaller font size for button text */
+  font-size: 1.2rem;
+  /* Sull width button for emphasis */
+  width: 100%;
+}
+
+.submit-button:hover {
+  /* Lighter color on hoer to show interactivity */
+  background-color: #d9b26b ;
+}
+
 
 
 /* Media query for mobile devices in portrait orientation */
