@@ -325,16 +325,152 @@ footer h3 {
   cursor: pointer;
   /* Slightly smaller font size for button text */
   font-size: 1.2rem;
-  /* Sull width button for emphasis */
+  /* Full width button for emphasis */
   width: 100%;
 }
 
 .submit-button:hover {
-  /* Lighter color on hoer to show interactivity */
+  /* Lighter color on hover to show interactivity */
   background-color: #d9b26b ;
 }
 
 
+.sea-island {
+  /* Sets a radial gradient background to mimic an 'island in the sea' effect */
+  background-image: radial-gradient(circle, #ddce76 50%, #00bcd4 60%, #0096b2 80%, #006994);
+  /* Defines height relative to the viewport for consistent layout scaling */
+  height: 87vh;
+  /* Enables flex layout to center the project items */
+  display: flex;
+  /* Allows flex items to wrap onto multiple lines on smaller screens */
+  flex-wrap: wrap;
+  /* Centers the project items horizontally */
+  justify-content: center;
+  /* Centers the project items vertically */
+  align-items: center;
+  /* Adds padding to the container */
+  padding: 2rem;
+}
+
+.project-item {
+  /* Sets the width of each project item to 50% of the container minus 2rem for spacing */
+  width: calc(50% - 2rem);
+  /* Limits the maximum width of the project items to 20rem */
+  max-width: 20rem; 
+  /* Sets the spacing between each project item */
+  margin: 0 1rem;
+  /* Rounds the corners of the project items */
+  border-radius: 10px;
+  /* Adds a shadow effect to create depth for the project items */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* Defines a smooth transition effect for hover states */
+  transition: all 0.3s ease;
+  /* Shows pointer cursor on hover */
+  cursor: pointer;
+}
+
+
+.project-img {
+  /* Sets the width of the images to 100% of it's container width */
+  width: 100%;
+  /* Sets the height of the images to 100% of it's container height */
+  height: 100%;
+  /* Defines a smooth transistion effect for the opacity */
+  transition: opacity 0 0.5s ease;
+}
+
+.project-name-tag {
+  /* Absolute positioning to place the tag inside the project item */
+  position: absolute;
+  /* Sets the distance from the bottom of the item */
+  bottom: 2rem;
+  /* Centers the tag horizontally */
+  left: 50%;
+  /* Centers the element by shifting it left by half its width */
+  transform: translateX(-50%);
+  /* Translucent background for the tag */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Text color for contrast with the background */
+  color: white;
+  /* Sets padding around text */
+  padding: 1rem 2rem;
+  /* Sets font size for better readibility */
+  font-size: 2rem;
+  /* Slightly rounds the corners */
+  border-radius: 5px;
+  /* Hides it by default */
+  opacity: 0;
+  /* Defines a smooth fade-in transition */
+  transition: opacity 0.5 ease;
+}
+
+.project-item:hover .project-name-tag {
+  /* Makes it visible on hover */
+  opacity: 1;
+}
+
+.project-item:hover {
+  /* Slightly increases the size on hover */
+  transform: scale(1.05);
+}
+
+.project-item:hover .project-img {
+  /* Slightly decreases opacity of the image on hover for a focus effect */
+  opacity: 0.7;
+}
+
+.modal {
+  /* Sets the position to fixed, allowing the modal to stay in view */
+  position: fixed;
+  /* Centers the modal vertically by positioning it 50% from the top */
+  top: 50%;
+  /* Centers the modal horizontally by positioning it 50% from the left */
+  left: 50%;
+  /* Offsets the modal by half its width and height to achieve perfect centering */
+  transform: translate(-50%, -50%);
+  /* Sets the modal background color */
+  background-color: white;
+  /* Adds padding for improved spacing inside the modal */
+  padding: 2rem;
+  /* Adds a shadow effect to the modal for better contrast */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  /* Sets the z index to 10 to ensure it is above every other element */
+  z-index: 10;
+  /* Sets the width to 80% of the parent container */
+  width: 80%;
+  /* Limits the maximum width to 500 pixels */
+  max-width: 500px;
+  /* Slightly rounds the corners */
+  border-radius: 5px;
+  /* Centers the text in the modal */
+  text-align: center;
+}
+
+.modal button {
+  /* Sets the space around the button */
+  margin: 1rem;
+  /* Sets the inner padding to the button */
+  padding: 1rem;
+  /* Sets the background color for the button */
+  background-color: #d40000;
+  /* Sets the text color for the button */
+  color: white;
+  /* Removes the default border from the button */
+  border: none;
+  /* Changes the cursor to a pointer to indicate interactivity */
+  cursor: pointer;
+}
+
+.modal a {
+  /* Makes link occupy full line */
+  display: block;
+  /* Sets the space above the link  */
+  margin-top: 5px;
+  /* Sets the a tag links to a blue color */
+  color: #00bcd4;
+  /* Removes default underline */
+  text-decoration: none;
+}
 
 /* Media query for mobile devices in portrait orientation */
 @media (max-width: 768px) and (orientation: portrait) {
