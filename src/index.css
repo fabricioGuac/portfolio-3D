@@ -2,6 +2,8 @@
 :root {
   --heafoo-bg-color: #8B4513;
   --heafoo-border-color: #5A3213; 
+  --tree-color: #A45B17;
+  --tree-color-dark: #843C02;
 }
 
  * {
@@ -472,6 +474,108 @@ footer h3 {
   text-decoration: none;
 }
 
+.beach {
+  /* Sets a linear gradient background to create a beach effect */
+  background-image: linear-gradient(360deg, rgba(224,180,107,1) 60%, rgb(60, 168, 187) 70%);
+  /* Defines height relative to the viewport for consistent layout scaling */
+  height: 90vh;
+  /* Sets the text color to white for contrast againts the background */
+  color: white;
+  /* Enables flex layout */
+  display: flex;
+  /* Centers the childrens horizontally */
+  justify-content: center;
+  /* Centers the childrens vertically */
+  align-items: center;
+  /* Positions childrens relative to thie container */
+  position: relative;
+  /* Adds padding around the content inside the container */
+  padding: 1rem;
+  /* Hides any overflowing content */
+  overflow: hidden;
+} 
+
+.curved-trunk {
+  /* Positions the trunk absolutely within it's container */
+  position: absolute;
+  /* Ensures the trunk is at the bottom of it's container */
+  bottom: 0;
+  /* Positions the trunk slightly to the right of it's container */
+  right: 10%;
+  /* Sets the width of the trunk responsive to the viewport */
+  width: 5vw; 
+  /* Prevents the trunk from getting too thin */
+  min-width: 40px;
+  /* Extends the trunk beyond the container's height */
+  height: 110vh;
+  /* Creates a pattern for the trunk */
+  background: repeating-radial-gradient(circle at top,
+    var(--tree-color),
+    var(--tree-color) 7vw,
+    var(--tree-color-dark) 7vw,
+    var(--tree-color-dark) 8vw
+  );
+  /* Rounds the trunk to give it a natural curved look */
+  border-radius: 50% 0 0 50%; 
+  /* Tilts the trunk for a leaning palm tree effect */
+  transform: rotate(-45deg); 
+  /* Adds a shadow to give depth to the trunk */
+  box-shadow: inset 0 0 1rem rgba(0, 0, 0, 0.5);
+}
+
+
+.coconut {
+  /* Sets a brown background to mimic a coconut */
+  background-color: #793d13;
+  /* Defines a consistent circular shape */
+  width: 4rem; 
+  height: 4rem;
+  /* Makes the coconut round */
+  border-radius: 50%;
+  /* Adds a shadow for a 3D */
+  box-shadow: inset 0 0 1rem rgba(0, 0, 0, 0.5);
+  /* Positions the coconut absolutely within it's container */
+  position: absolute;
+}
+
+
+/* Positions the coconuts */
+.coconut-1 {
+  bottom: 13rem; left: 2rem; 
+}
+.coconut-2 { 
+  bottom: 15rem; left: 4rem; 
+}
+.coconut-3 { 
+  bottom: 13rem; left: 6rem; 
+}
+
+
+
+.about-me-text {
+  /* Positions the text relative within it's container */
+  position: relative;
+  /* Ensures the text appears above other elements */
+  z-index: 1;
+  /* Centers the text horizontally */
+  text-align: center;
+  /* Sets the font size for readibility */
+  font-size: 1.5rem;
+  /* Sets the font family */
+  font-family: 'Lora', serif;
+  /* Adds a translucent background for readbility */
+  background: rgba(0, 0, 0, 0.4);
+  /* Sets the padding around the text content */
+  padding: 1.5rem;
+  /* Round the corners of the container */
+  border-radius: 10px;
+  /* Limits the width for readability */
+  max-width: 800px; 
+  /* Centers text box and adds vertical spacing */
+  margin: 2rem auto;
+}
+
+
 /* Media query for mobile devices in portrait orientation */
 @media (max-width: 768px) and (orientation: portrait) {
   .sceneContainer {
@@ -514,7 +618,16 @@ footer h3 {
     line-height: 1.2em;
 }
 
+.about-me-text {
+  /* Reduces the padding */
+  padding: 0.1rem;
+  /* Sets it 10% above from the bottom */
+  bottom: 10%;
 }
+
+}
+
+
 
 /* Media query specifically for the iPad Mini in portrait orientation */
 @media (min-width: 768px) and (max-height: 1024px) {
