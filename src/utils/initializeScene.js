@@ -65,10 +65,10 @@ export default function initializeScene(container, navigate) {
     const boat = new Boat(scene);
 
     //Initializes the islands
-    const skillIsland = new Island(scene,'src/assets/Treactopus/scene.gltf',{x: -90, y: 2, z: -160},'/skills', 'Skills', navigate, 3, 10);
-    const contactBottle = new Island(scene,'src/assets/Bottle/scene.gltf',{x: -10, y: 5, z: -200},'/contact', 'Contact',navigate, 8, 3.5);
-    const PortfolioIsland = new Island(scene,'src/assets/ShellIsland/scene.gltf',{x: 70, y: -2, z: -320},'/projects', 'Projects',navigate, 6, 6);
-    const aboutMeIsland = new Island(scene,'src/assets/TropicalIsland/scene.gltf',{x: 175, y: -2, z: -180},'/aboutMe', 'About me',navigate, 0.1, 300);
+    const skillIsland = new Island(scene,'/Treactopus/scene.gltf',{x: -90, y: 2, z: -160},'/skills', 'Skills', navigate, 3, 10);
+    const contactBottle = new Island(scene,'/Bottle/scene.gltf',{x: -10, y: 5, z: -200},'/contact', 'Contact',navigate, 8, 3.5);
+    const PortfolioIsland = new Island(scene,'/ShellIsland/scene.gltf',{x: 70, y: -2, z: -320},'/projects', 'Projects',navigate, 6, 6);
+    const aboutMeIsland = new Island(scene,'/TropicalIsland/scene.gltf',{x: 175, y: -2, z: -180},'/aboutMe', 'About me',navigate, 0.1, 300);
 
 
     //Configures the css2d renderer

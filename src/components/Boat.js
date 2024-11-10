@@ -12,7 +12,7 @@ export default class Boat {
         const loader = new GLTFLoader();
 
         //Loads the boat model from the specified GLTF file
-        loader.load('src/assets/Boat/scene.gltf', (gltf) => {
+        loader.load('/Boat/scene.gltf', (gltf) => {
             //Stores the loaded boat model in the class instance
             this.boat = gltf.scene;
             //Adds the boat model to the specified scene
