@@ -576,6 +576,94 @@ footer h3 {
 }
 
 
+.skills-chest {
+  /* Sets a brown background to create a wood-like theme */
+  background-color: #5A3213; 
+  /* Defines the minimum height relative to the viewport for consistent layout scaling */
+  min-height: 90vh; 
+  /* Adds padding to the container */
+  padding: 2rem;
+  /* Sets the text color to white */
+  color: white;
+  /* Enables flex layout */
+  display: flex;
+  /* Arranges flex items vertically */
+  flex-direction: column;
+}
+
+
+.skills-groups {
+  /* Enables flex layout */
+  display: flex;
+  /* Allows flex items to wrap and adjust based on the screen size */
+  flex-wrap: wrap;
+  /* Sets the gap between the items for better spacing */
+  gap: 1.5rem; 
+  /* Centers the items horizontally within the container */
+  justify-content: center;
+  /* Allows the items to take up the full width of their container */
+  width: 100%;
+}
+
+
+.skill-group {
+  /* Gives the skill group a darker background for contrast against the container */
+  background-color: #3A2008; 
+  /* Sets padding within the skill group for spacing */
+  padding: 1rem;
+  /* Slightly rounds the corners */
+  border-radius: 8px;
+  /* Sets a shadow for styling and depth */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  /* Defines the width of each skill group  */
+  width: 620px;
+  /* Centers the text within the skill group */
+  text-align: center;
+}
+
+
+.skill-group h2 {
+  /* Sets the font size for better readability */
+  font-size: 1.7rem;
+  /* Defines bottom margin for proper spacing between the title and the list */
+  margin-bottom: 0.5rem;
+}
+
+.skill-group ul {
+  /* Removes the default list decoration (bullets) for a cleaner look */
+  list-style: none;
+}
+
+.skill-group li {
+  /* Sets a gold-like color for the treasure chest theme */
+  color: #d4af37; 
+  /* Sets the font size for better readibility */
+  font-size: 1.5rem;
+}
+
+
+.resume-link {
+  /* Centers the text within the container */
+  text-align: center;
+  /* Allows minor adjustments to the element's position without removing it from the document flow */
+  position: relative;
+  /* Moves the elemet 10 pixels up */
+  top: -10px;
+  /* Sets the margin for the resume link */
+  margin: 1rem 0 3rem 0; 
+}
+
+.resume-link a {
+  /* Makes the download link gold */
+  color: #d4af37;
+}
+
+.resume-link a:hover {
+  /* Changes the link color to a brighter gold on hover to indicate interactivity */
+  color: #ffd700; 
+}
+
+
 /* Media query for mobile devices in portrait orientation */
 @media (max-width: 768px) and (orientation: portrait) {
   .sceneContainer {
@@ -626,7 +714,6 @@ footer h3 {
 }
 
 }
-
 
 
 /* Media query specifically for the iPad Mini in portrait orientation */
