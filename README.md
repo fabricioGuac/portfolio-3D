@@ -2,7 +2,7 @@
 
 ## Description 
 
-
+An immersive portfolio built with React and Three.js, allowing users to navigate through a dynamic 3D environment to explore portfolio information in a unique, engaging way. Users control a boat to visit four islands, each dedicated to a different portfolio section: **About Me**, **Skills**, **Projects**, and **Contact**. The project leverages EmailJS for the contact form, enabling direct communication.
 
 ## Instalation
 
@@ -10,15 +10,15 @@ N/A
 
 ## Usage
 
-
+Navigate the boat using the arrow keys on desktop or the on-screen joystick on mobile devices to visit each island. On **Projects Island**, click on project images to view detailed information in a modal, including links to repositories and deployed apps if available. **Contact Island** includes a form that allows users to send messages directly. The other islands display static information, with **About Me** providing a brief introduction and **Skills** listing technical proficiencies.
 
 ## Screenshot displaying the deployed app
 
-![Screenshot]()
+![Screenshot](./3dPortfolio.png)
 
 ## URL to the deployed app
 
-
+https://portfolio-3d-49ab.onrender.com/
 
 ## Credits
 
